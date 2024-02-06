@@ -1,0 +1,12 @@
+#useDynLib(pchc, .registration = TRUE)
+
+importFrom("Rfast", dmvt, mvt.mle, rmvt)
+importFrom("Rfast2", cauchynb.pred, cauchy.nb, nb.cv)
+importFrom("graphics", filled.contour, contour, points, axis, par)
+importFrom("grDevices", "colorRampPalette")
+
+exportPattern("^[[:alpha:]]+")
+exportPattern("^[^\\.]")
+
+export(bivcauchy.contour, cauchy.nb, cauchynb.pred, cv.cauchynb, cv.mvcauchyda,
+       dmvcauchy, rmvcauchy, mvcauchy.da, mvcauchy.mle)
