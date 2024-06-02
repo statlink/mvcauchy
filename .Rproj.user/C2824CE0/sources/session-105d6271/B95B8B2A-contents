@@ -13,8 +13,8 @@ The Cauchy distribution is a special case of the t distribution when the degrees
 \tabular{ll}{
 Package: \tab mvcauchy\cr
 Type: \tab Package\cr
-Version: \tab 1.1 \cr
-Date: \tab 2024-06-02\cr
+Version: \tab 1.0 \cr
+Date: \tab 2024-02-06\cr
 License: \tab GPL-2\cr
 }
 }
