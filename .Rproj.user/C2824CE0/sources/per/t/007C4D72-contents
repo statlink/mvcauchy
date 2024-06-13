@@ -1,0 +1,55 @@
+\documentclass{article}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+<<>>=
+# Load necessary library
+library(MCMCpack)
+# Set seed for reproducibility
+set.seed(123)
+# Generate synthetic data: 50 observations from a Poisson distribution with lambda = 3
+lambda_true <- 3
+data <- rpois(50, lambda_true)
+# Summarize the data
+data_summary <- summary(data)
+cat("Data Summary:\n")
+print(data_summary)
+# Prior parameters for the Gamma distribution (conjugate prior for Poisson)
+alpha_prior <- 2
+beta_prior <- 1
+# Likelihood: Summarize the observed data
+x_sum <- sum(data)
+n <- length(data)
+# Posterior parameters for the Gamma distribution
+alpha_post <- alpha_prior + x_sum
+beta_post <- beta_prior + n
+# Display prior and posterior parameters
+cat("Prior parameters: alpha =", alpha_prior, ", beta =", beta_prior, "\n")
+cat("Posterior parameters: alpha =", alpha_post, ", beta =", beta_post, "\n")
+# Generate samples from the prior and posterior distributions
+prior_samples <- rgamma(10000, shape = alpha_prior, rate = beta_prior)
+posterior_samples <- rgamma(10000, shape = alpha_post, rate = beta_post)
+# Plot the prior and posterior distributions
+hist(prior_samples, breaks = 50, probability = TRUE, col = rgb(0, 0, 1, 0.5),
+     main = "Prior and Posterior Distributions", xlab = expression(lambda), ylim = c(0, 1.5))
+hist(posterior_samples, breaks = 50, probability = TRUE, col = rgb(1, 0, 0, 0.5), add = TRUE)
+# Add a legend
+legend("topright", legend = c("Prior", "Posterior"),
+       fill = c(rgb(0, 0, 1, 0.5), rgb(1, 0, 0, 0.5)))
+# Summary of posterior samples
+cat("Posterior mean:", mean(posterior_samples), "\n")
+cat("Posterior 95% credible interval:", quantile(posterior_samples, c(0.025, 0.975)), "\n")
+@
+
+<<>>=
+counts <- c(18,17,15,20,10,20,25,13,12)
+outcome <- gl(3,1,9)
+treatment <- gl(3,3)
+posterior <- MCMCpoisson(counts ~ outcome + treatment)
+plot(posterior)
+summary(posterior)
+@
+
+
+\end{document}
